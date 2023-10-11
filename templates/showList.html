@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'show.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Table</title>
+   
+</head>
+<body>
+    <h2>Responsive Table</h2>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Address2</th>
+            <th>Zipcode</th>
+            <th>State</th>
+            <th>CheckinTime</th>
+            <th>CheckinDate</th>
+            <th>CheckoutTime</th>
+            <th>CheckoutDate</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations%}
+        <tr>
+            <td>{{reservation.Firstname}}</td>
+            <td>{{reservation.Lastname}}</td>
+            <td>{{reservation.Email}}</td>
+            <td>{{reservation.Phone}}</td>
+            <td>{{reservation.Address}}</td>
+            <td>{{reservation.Address2}}</td>
+            <td>{{reservation.Zip_code}}</td>
+            <td>{{reservation.State}}</td>
+            <td>{{reservation.Date_checkIn}}</td>
+            <td>{{reservation.Time_checkIn}}</td>
+            <td>{{reservation.Date_checkOut}}</td>
+            <td>{{reservation.Time_checkOut}}</td>
+            <td><a href="{% url 'reservation_detail' reservation.id %}"><i class="fa-solid fa-eye"></i></a></td>
+            
+           
+        </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+</div>
+</body>
+</html>
