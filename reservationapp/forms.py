@@ -19,8 +19,8 @@ class ReservationForm(ModelForm):
         widgets = {
             'Date_checkIn': widgets.DateInput(attrs={'placeholder': 'Check-in date: YYYY-MM-DD',"type":"date"}),
             'Date_checkOut': widgets.DateInput(attrs={'placeholder': 'Check-out date: YYYY-MM-DD',"type":"date"}),
-            'TimeCheckIn': AMPMTimeInput(attrs={'placeholder': 'Check-in Time'}),
-            'TimeCheckOut': AMPMTimeInput(attrs={'placeholder': 'Check-out Time'})
+            'Time_checkIn': AMPMTimeInput(attrs={'placeholder': 'Check-in Time',"type":"time"}),
+            'Time_checkOut': AMPMTimeInput(attrs={'placeholder': 'Check-out Time',"type":"time"})
         }
 
 

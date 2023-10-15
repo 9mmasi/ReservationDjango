@@ -7,14 +7,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Table</title>
+  
    
 </head>
 <body>
+    {% include "navbar.html" %}
     {% if user.is_authenticated %}
+   
     
    
-    <h2>Responsive Table</h2>
-<div class="table-wrapper">
+   
+     <div class="table-wrapper">
+        {% if messages %}
+     <div class="alert" id="alert">
+        <span class="closebtn" onclick="closeAlert()">&times;</span>
+        {% for message in messages %}
+        <strong>{{message}}</strong>
+        {% endfor %}
+    </div>
+
+     {% endif %}
+     <h2>Customers Detail</h2>
     
 
     <table class="fl-table">
@@ -49,5 +62,22 @@
     <p>You must be logged in to access the reservation list.</p>
     {% endif %}
 </div>
+
+
+<script>
+    // Function to close the alert
+    function closeAlert() {
+        var alert = document.getElementById("alert");
+        alert.style.display = "none";
+    }
+</script>
+
+<script>
+    // Function to show the alert
+    function showAlert() {
+        var alert = document.getElementById("alert");
+        alert.style.display = "block";
+    }
+</script>
 </body>
 </html>

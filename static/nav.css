@@ -152,12 +152,13 @@ body {
     list-style: none;
     display: grid;
     grid-auto-flow: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     grid-auto-rows: 2.25rem;
 }
 
 .list-item {
     block-size: 100%;
+    margin-right: 6rem;
 }
 
 .nav__link {

@@ -13,20 +13,9 @@
 <body>
     
     <div class="cont">
+      <a type="button"  href="{% url 'viewlist' %}" class="btn m-5  btn-primary">Back</a>
         {% if user.is_authenticated %}
-          {% if messages %}
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            
-
-            {% for message in messages %}
-            <strong class="text-center">{{message}}!</strong> 
-
-            {% endfor %}
-
-           
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          {% endif %}
+         
           <div class="sub-cont d-flex justify-content-center align-item-center">
             
             <form method="POST"  enctype="multipart/form-data">

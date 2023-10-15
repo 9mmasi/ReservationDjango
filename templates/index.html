@@ -8,13 +8,13 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Document</title>
+    <title>Reservation Form</title>
 </head>
 <body>
     
         <div class="cont">
-          <div class="sub-cont d-flex justify-content-center align-item-center">
-            {% if messages %}
+          <h1 class="text-center">Reservation Form</h1>
+          {% if messages %}
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
             
 
@@ -27,6 +27,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           {% endif %}
+          <div class="sub-cont d-flex justify-content-center align-item-center">
+
+            
    <form method="POST"  enctype="multipart/form-data">
     {% csrf_token %}
      <div class="row">
