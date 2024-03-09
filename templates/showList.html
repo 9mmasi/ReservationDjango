@@ -1,83 +1,71 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+{%load static%}
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'show.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Table</title>
-  
-   
+  <title>Responsive Table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'show.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-    {% include "navbar.html" %}
-    {% if user.is_authenticated %}
+{%include "navbar.html" %}
+{% if user.is_authenticated %}
    
-    
-   
-   
-     <div class="table-wrapper">
-        {% if messages %}
-     <div class="alert" id="alert">
-        <span class="closebtn" onclick="closeAlert()">&times;</span>
-        {% for message in messages %}
-        <strong>{{message}}</strong>
-        {% endfor %}
-    </div>
+<form method="GET" action="{% url 'viewlist' %}">
+  <label for="start_date">Start Date:</label>
+  <input type="date" id="start_date" name="start_date">
 
-     {% endif %}
-     <h2>Customers Detail</h2>
-    
+  <label for="end_date">End Date:</label>
+  <input type="date" id="end_date" name="end_date">
 
-    <table class="fl-table">
-        <thead>
-        <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
-            
-            <th>View</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for reservation in reservations%}
-        <tr>
-            <td>{{reservation.Firstname}}</td>
-            <td>{{reservation.Lastname}}</td>
-            <td>{{reservation.Email}}</td>
-            <td>{{reservation.Phone}}</td>
-            <td>{{reservation.Address}}</td>
-           
-            <td><a href="{% url 'reservation_detail' reservation.id %}"><i class="fa-solid fa-eye"></i></a></td>
-            
-           
-        </tr>
-        {% endfor %}
-        <tbody>
-    </table>
-    {% else %}
-    <p>You must be logged in to access the reservation list.</p>
-    {% endif %}
+  <button type="submit">Filter</button>
+</form>
+<table class="table">
+  <thead>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Zipcode</th>
+    <th>State</th>
+    <th>Detail</th>
+  </thead>
+  <tbody>
+    {%for reservation in reservations %}
+    <tr>
+      <td data-label="S.No">{{ reservation.Firstname }}</td>
+      <td data-label="Name">{{ reservation.Lastname }}</td>
+      <td data-label="Age">{{ reservation.Email }}</td>
+      <td data-label="Marks%">{{ reservation.Phone }}</td>
+      <td data-label="Staus">{{ reservation.Zip_code }}</td>
+      <td data-label="Staus">{{ reservation.State }}</td>
+      <td data-label="Staus"><a href="{% url 'reservation_detail' reservation.id %}"><i class="fa-solid fa-eye"></i> view</a></td>
+    </tr>
+{% endfor %}
+   
+  </tbody>
+</table>
+<div class="pagination justify-content-center">
+  <span class="step-links">
+      {% if reservations.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ reservations.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}.
+      </span>
+
+      {% if reservations.has_next %}
+          <a href="?page={{ reservations.next_page_number }}">next</a>
+          <a href="?page={{ reservations.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
 </div>
+{% else %}
+<p>You must be logged in to access the reservation list.</p>
+{% endif %}
 
-
-<script>
-    // Function to close the alert
-    function closeAlert() {
-        var alert = document.getElementById("alert");
-        alert.style.display = "none";
-    }
-</script>
-
-<script>
-    // Function to show the alert
-    function showAlert() {
-        var alert = document.getElementById("alert");
-        alert.style.display = "block";
-    }
-</script>
 </body>
+
 </html>

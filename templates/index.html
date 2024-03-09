@@ -1,57 +1,205 @@
+
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Reservation Form</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+  <div class="formbold-main-wrapper">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <div class="formbold-form-wrapper">
+      {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+
     
-        <div class="cont">
-          <h1 class="text-center">Reservation Form</h1>
-          {% if messages %}
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            
+{% endif %}
 
-            {% for message in messages %}
-            <strong class="text-center">{{message}}!</strong> 
-
-            {% endfor %}
-
-           
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          {% endif %}
-          <div class="sub-cont d-flex justify-content-center align-item-center">
-
-            
-   <form method="POST"  enctype="multipart/form-data">
-    {% csrf_token %}
-     <div class="row">
-       <div class="col-25">
-         {{form.as_p}}
-         <input type="submit" value="Submit"/>
-       </div>
-       
-     </div>
-     
-    
-    
-     
       
-     
-   </form>
+      
+  
+      <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <div class="formbold-form-title">
+          <h2 class="">Register now</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt.
+          </p>
+        </div>
+  
+        <div class="formbold-input-flex">
+          <div>
+            <label for="Firstname" class="formbold-form-label">
+              First name
+            </label>
+            <input
+              type="text"
+              name="Firstname"
+              id="Firstname"
+              class="formbold-form-input"
+            />
+          </div>
+          <div>
+            <label for="Lastname" class="formbold-form-label"> Last name </label>
+            <input
+              type="text"
+              name="Lastname"
+              id="Lastname"
+              class="formbold-form-input"
+            />
+          </div>
+        </div>
+  
+        <div class="formbold-input-flex">
+          <div>
+            <label for="Email" class="formbold-form-label"> Email </label>
+            <input
+              type="email"
+              name="Email"
+              id="Email"
+              class="formbold-form-input"
+            />
+          </div>
+          <div>
+            <label for="Phone" class="formbold-form-label"> Phone</label>
+            <input
+              type="text"
+              name="Phone"
+              id="Phone"
+              class="formbold-form-input"
+            />
+          </div>
+        </div>
+        <div class="formbold-input-flex">
+        <div class="formbold-mb-3">
+          <label for="Address" class="formbold-form-label">
+            Street Address
+          </label>
+          <input
+            type="text"
+            name="Address"
+            id="Address"
+            class="formbold-form-input"
+          />
+        </div>
+  
+        <div class="formbold-mb-3">
+          <label for="Address2" class="formbold-form-label">
+            Street Address2
+          </label>
+          <input
+            type="text"
+            name="Address2"
+            id="Address2"
+            class="formbold-form-input"
+          />
+        </div>
+      </div>
+  
+        <div class="formbold-input-flex">
+          <div>
+            <label for="State" class="formbold-form-label"> State/Prvince </label>
+            <input
+              type="text"
+              name="State"
+              id="State"
+              class="formbold-form-input"
+            />
+          </div>
+          <div>
+            <label for="Zip_code" class="formbold-form-label"> Post/Zip code </label>
+            <input
+              type="text"
+              name="Zip_code"
+              id="Zip_code"
+              class="formbold-form-input"
+            />
           </div>
           
- </div> 
- 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
- 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>    
+        </div>
+        <div>
+          <label for="Image" class="formbold-form-label">File Upload</label>
+          <input
+            type="file"
+            name="Image"
+            id="Image"
+            class="formbold-form-input"
+          />
+        </div>
+       
+        <div class="formbold-input-flex">
+        <div>
+          <label for="Time_checkOut" class="formbold-form-label">Time_checkOut</label>
+          <input
+            type="time"
+            name="Time_checkOut"
+            id="Time_checkOut"
+            class="formbold-form-input"
+          />
+        </div>
+        <div>
+          <label for="Date_checkIn" class="formbold-form-label">Date_checkIn</label>
+          <input
+            type="date"
+            name="Date_checkIn"
+            id="Date_checkIn"
+            class="formbold-form-input"
+          />
+        </div>
+      </div>
+  
+        <div class="formbold-input-flex">
+          
+          <div>
+            <label for="Time_checkIn" class="formbold-form-label">Time_checkIn</label>
+            <input
+              type="time"
+              name="Time_checkIn"
+              id="Time_checkIn"
+              class="formbold-form-input"
+            />
+          </div>
+          <div>
+            <label for="Date_checkOut" class="formbold-form-label">Date_checkOut</label>
+            <input
+              type="date"
+              name="Date_checkOut"
+              id="Date_checkOut"
+              class="formbold-form-input"
+            />
+          </div>
+        </div>
+        
+      </div>
+      </div>
+      </div>
+  
+        <div class='btn-container'>
+          <span>login as <a href="{% url 'login' %}">Admin</a></span>
+  
+        <button class="formbold-btn">Register Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Add a timeout to hide the messages after a certain duration
+    setTimeout(function() {
+        var messages = document.getElementsByClassName('messages')[0];
+        messages.style.display = 'none';
+    }, 5000);  // Adjust the duration (in milliseconds) as needed, e.g., 5000 for 5 seconds
+</script>
 </body>
 </html>
+
+
+

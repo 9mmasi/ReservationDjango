@@ -1,156 +1,114 @@
-*{
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-*:focus{
-    outline-style: none;
-    text-decoration: none;
-}
-body{
-    font-family: Helvetica;
-    height: 70vh;
-    -webkit-font-smoothing: antialiased;
-    background: rgba( 71, 147, 227, 1);
-}
-h2{
-    text-align: center;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: white;
-    padding: 30px 0;
-}
-#alert {
-    padding: 15px;
-    background-color: #ac3f37; /* Red background color */
-    color: white; /* White text color */
-    border-radius: 5px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    transition: 0.5s;
-    z-index: 1;
-    text-align: center;
-    display: none; /* Initially hidden */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: sans-serif;
+  background:#fff
 }
 
-/* Styling for the close button */
-.closebtn {
+* {
+  box-sizing: border-box;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table td,
+.table th {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 16px;
+}
+
+.table th {
+  background-color: #92c9e6;
+  color: #ffffff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #d1e8f5;
+}
+
+/*responsive*/
+
+@media (max-width: 500px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+  .table tr {
+    margin-bottom: 15px;
+  }
+  .table td {
+    padding-left: 50%;
+    text-align: left;
+    position: relative;
+  }
+  .table td::before {
+    content: attr(data-label);
     position: absolute;
-    top: 0;
-    right: 15px;
-    padding: 10px;
-    cursor: pointer;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+/* Basic styling for the form */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 400px; /* Adjust the maximum width as needed */
+  margin: 0 auto;
 }
 
-/* Table Styles */
-
-.table-wrapper{
-    margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+/* Style for labels */
+label {
+  margin-bottom: 5px;
 }
 
-.fl-table {
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
+/* Style for date inputs */
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Style for the filter button */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 600px) {
+  form {
     max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
+  }
 }
 
-.fl-table td, .fl-table th {
-    text-align: center;
-    padding: 8px;
-}
+@media (max-width: 400px) {
+  input[type="date"] {
+    margin-bottom: 5px;
+  }
 
-.fl-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
-}
-
-.fl-table thead th {
-    color: #ffffff;
-    background: #4FC3A1;
-}
-
-
-.fl-table thead th:nth-child(odd) {
-    color: #ffffff;
-    background: #324960;
-}
-
-.fl-table tr:nth-child(even) {
-    background: #F8F8F8;
-}
-
-/* Responsive */
-
-@media (max-width: 767px) {
-    .fl-table {
-        display: block;
-        width: 100%;
-    }
-    .table-wrapper:before{
-        content: "Scroll horizontally >";
-        display: block;
-        text-align: right;
-        font-size: 11px;
-        color: white;
-        padding: 0 0 10px;
-    }
-    .fl-table thead, .fl-table tbody, .fl-table thead th {
-        display: block;
-    }
-    .fl-table thead th:last-child{
-        border-bottom: none;
-    }
-    .fl-table thead {
-        float: left;
-    }
-    .fl-table tbody {
-        width: auto;
-        position: relative;
-        overflow-x: auto;
-    }
-    .fl-table td, .fl-table th {
-        padding: 20px .625em .625em .625em;
-        height: 60px;
-        vertical-align: middle;
-        box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: 120px;
-        font-size: 13px;
-        text-overflow: ellipsis;
-    }
-    .fl-table thead th {
-        text-align: left;
-        border-bottom: 1px solid #f7f7f9;
-    }
-    .fl-table tbody tr {
-        display: table-cell;
-    }
-    .fl-table tbody tr:nth-child(odd) {
-        background: none;
-    }
-    .fl-table tr:nth-child(even) {
-        background: transparent;
-    }
-    .fl-table tr td:nth-child(odd) {
-        background: #F8F8F8;
-        border-right: 1px solid #E6E4E4;
-    }
-    .fl-table tr td:nth-child(even) {
-        border-right: 1px solid #E6E4E4;
-    }
-    .fl-table tbody td {
-        display: block;
-        text-align: center;
-    }
+  button {
+    width: 100%;
+  }
 }

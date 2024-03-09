@@ -1,32 +1,55 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login,logout
-from . forms import ReservationForm,ReservationUpdateForm
+from datetime import date,timedelta
+
 from django.contrib import messages
 from . models import Reservation
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views
+def to_camel_case(s):
+    words = s.split('_')
+    return ''.join(word.capitalize() for word in words)
 
 def create_reservation(request):
+   
     if request.method == 'POST':
-        form = ReservationForm(request.POST,request.FILES)
-        if form.is_valid():
-           
-            form.save()
-            messages.success(request,"Your Successful submit your detail")
-            return redirect('created')
-    else:
-        form = ReservationForm()
+        Firstname = to_camel_case(request.POST.get('Firstname'))
+        Lastname = to_camel_case(request.POST.get('Lastname'))
+        Email = to_camel_case(request.POST.get('Email'))
+        State = to_camel_case(request.POST.get('State'))
+        Phone = to_camel_case(request.POST.get('Phone'))
+        Address = to_camel_case(request.POST.get('Address'))
+        Address2 = to_camel_case(request.POST.get('Address2'))
+        Zip_code = to_camel_case(request.POST.get('Zip_code'))
+        Image = request.FILES.get('Image')
+        Date_checkIn = to_camel_case(request.POST.get('Date_checkIn'))
+        Date_checkOut = to_camel_case(request.POST.get('Date_checkOut'))
+        Time_checkIn = to_camel_case(request.POST.get('Time_checkIn'))
+        Time_checkOut = to_camel_case(request.POST.get('Time_checkOut'))
 
-    context = {
-        'form': form,
+        Reservation.objects.create(
+            Firstname=Firstname, Lastname=Lastname,
+            Email=Email, State=State,
+            Phone=Phone, Address=Address,
+            Address2=Address2, Zip_code=Zip_code,
+            Image=Image, Date_checkIn=Date_checkIn,
+            Date_checkOut=Date_checkOut, Time_checkIn=Time_checkIn,
+            Time_checkOut=Time_checkOut
+        )
+
+        messages.success(request, 'Registration successfully!')
+        return redirect("created")
+
         
-    }
+    
 
-    return render(request, 'index.html', context)  
+    return render(request, 'index.html')  
 
 
 def login_view(request):
@@ -46,10 +69,19 @@ def login_view(request):
         return render(request, 'login.html')    
 
 
+
+
+
 def reservation_list(request):
     if request.user.is_authenticated:
         # User is logged in, allow access to the reservation list
-        reservations = Reservation.objects.all()
+
+        # Get today's date
+        today = date.today()
+
+        # Retrieve reservations for the next 7 days
+        end_date = today + timedelta(days=7)
+        reservations = Reservation.objects.filter(Date_checkIn__range=[today, end_date])
 
         # Create a Paginator instance with the reservations and set the number of items per page
         paginator = Paginator(reservations, 10)  # Show 10 reservations per page
@@ -75,6 +107,7 @@ def reservation_list(request):
 
 
 
+
 def reservation_detail(request, pk):
     reservation = get_object_or_404(Reservation, pk=pk)
 
@@ -91,30 +124,31 @@ def reservation_detail(request, pk):
 def update_reservation(request, pk):
     if request.user.is_authenticated:
         # Get the reservation object you want to update
-        reservation = get_object_or_404(Reservation, id=pk)
+        instance = get_object_or_404(Reservation, id=pk)
 
         if request.method == 'POST':
-            form = ReservationUpdateForm(request.POST, instance=reservation)
+            instance.Firstname = request.POST.get('Firstname')
+            instance.Lastname = request.POST.get('Lastname')
+            instance.Email = request.POST.get('Email')
+            instance.Phone = request.POST.get('Phone')
+            instance.State= request.POST.get('State')
+            instance.Zip_code = request.POST.get('Zip_code')
+            instance.Address = request.POST.get('Address')
+            instance.Address2 = request.POST.get('Address2')
+            new_image = request.FILES.get('Image')
 
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your details have been successfully updated.")
-                return redirect('viewlist')
-            else:
-                messages.error(request, "Please correct the errors below.")
-
-        else:
-            form = ReservationUpdateForm(instance=reservation)
-
-        context = {
-            'form': form,
-        }
-
-        return render(request, 'update_reservation.html', context)
+            # Check if a new image is provided, if not, keep the current image
+            if new_image:
+                instance.Image = new_image
+            
+            instance.save()
+            return HttpResponseRedirect(reverse('reservation_detail', args=[instance.id]))
+        
+        return render(request, 'update_reservation.html', {'instance': instance})
     else:
         # Handle the case where the user is not authenticated, e.g., redirect to a login page or show an error message
-        messages.error(request, "Please log in to access this page.")
-        return redirect('login')  # Replace 'login' with your actual login view name
+        return redirect('login')
+
 
 def delete_reservation(request, pk):
     if request.user.is_authenticated:

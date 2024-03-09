@@ -60,10 +60,10 @@ button {
   width: 100%;
   padding: 12px;
   font-size: 18px;
-  background: #15C39A;
+  background: #6a64f1;
   color: #fff;
   border: none;
-  border-radius: 100px;
+  
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
   margin-top: 15px;
@@ -71,7 +71,7 @@ button {
 }
 
 button:hover {
-  background: #55D3AC;
+  background: #6a64f5;
 }
 
 @media(max-width: 458px) {
