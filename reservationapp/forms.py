@@ -28,3 +28,7 @@ class ReservationUpdateForm(ModelForm):
     class Meta:
         model = Reservation
         exclude=['Date_checkIn','Date_checkOut','Time_checkIn','Time_checkOut']
+
+
+
+

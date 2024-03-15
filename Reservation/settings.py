@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-9kbuho370rq()c29h=4yd1dn8)9=aflot3(u6i5g06@#4a!hqt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reservationapp',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -119,8 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
-STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL ="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')

@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login,logout
-from datetime import date,timedelta
+from datetime import date,datetime
+from . filters import *
 
 from django.contrib import messages
 from . models import Reservation
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse 
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -72,38 +73,55 @@ def login_view(request):
 
 
 
+
+
+
 def reservation_list(request):
     if request.user.is_authenticated:
-        # User is logged in, allow access to the reservation list
+        reservations = Reservation.objects.all()
 
-        # Get today's date
-        today = date.today()
+        # Filter reservations based on Date_checkIn and Date_checkOut range
+        Date_checkIn = request.GET.get('Date_checkIn', '')
+        Date_checkOut = request.GET.get('Date_checkOut', '')
+        
+        # Validate date format consistency
+        date_format = "%m-%d-%Y"
+        try:
+            if Date_checkIn:
+                datetime.strptime(Date_checkIn, date_format)
+            if Date_checkOut:
+                datetime.strptime(Date_checkOut, date_format)
+        except ValueError:
+            # Handle invalid date format
+            # You can redirect the user to an error page or display a message
+            return HttpResponse("Invalid date format. Date format should be MM-DD-YYYY.")
 
-        # Retrieve reservations for the next 7 days
-        end_date = today + timedelta(days=7)
-        reservations = Reservation.objects.filter(Date_checkIn__range=[today, end_date])
+        if Date_checkIn and Date_checkOut:
+            # Convert string inputs to datetime objects
+            Date_checkIn = datetime.strptime(Date_checkIn, date_format)
+            Date_checkOut = datetime.strptime(Date_checkOut, date_format)
+            reservations = reservations.filter(Date_checkIn__range=[Date_checkIn, Date_checkOut])
 
-        # Create a Paginator instance with the reservations and set the number of items per page
-        paginator = Paginator(reservations, 10)  # Show 10 reservations per page
+        reservations = reservations.order_by('-Date_checkIn')    
 
+        paginator = Paginator(reservations, 10)
         page = request.GET.get('page')
+
         try:
             reservations = paginator.page(page)
         except PageNotAnInteger:
-            # If the page is not an integer, deliver the first page.
             reservations = paginator.page(1)
         except EmptyPage:
-            # If the page is out of range (e.g., 9999), deliver the last page.
             reservations = paginator.page(paginator.num_pages)
 
         context = {
             'reservations': reservations,
+            'Date_checkIn': Date_checkIn,
+            'Date_checkOut': Date_checkOut,
         }
         return render(request, 'showList.html', context)
     else:
-        # User is not logged in, handle accordingly
         return redirect("login")
-
 
 
 

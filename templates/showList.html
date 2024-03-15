@@ -12,11 +12,12 @@
 {% if user.is_authenticated %}
    
 <form method="GET" action="{% url 'viewlist' %}">
-  <label for="start_date">Start Date:</label>
-  <input type="date" id="start_date" name="start_date">
+  <label for="Date_checkIn">Date_checkIn</label>
+  <input type="date" id="Date_checkIn" onchange="formatDate(this) name="Date_checkIn">
 
-  <label for="end_date">End Date:</label>
-  <input type="date" id="end_date" name="end_date">
+  <label for="Date_checkOut">Date_checkOut:</label>
+  <input type="date" id="Date_checkOut" onchange="formatDate(this) name="Date_checkOut
+  ">
 
   <button type="submit">Filter</button>
 </form>
@@ -65,6 +66,25 @@
 {% else %}
 <p>You must be logged in to access the reservation list.</p>
 {% endif %}
+<script>
+  function formatDate(input) {
+      if (input.value) {
+          // Convert the input value to a Date object
+          var date = new Date(input.value);
+          
+          // Extract date components
+          var month = date.getMonth() + 1; // Month is zero-based
+          var day = date.getDate();
+          var year = date.getFullYear();
+          
+          // Format the date as MM-DD-YYYY
+          var formattedDate = month + '-' + day + '-' + year;
+          
+          // Set the input value to the formatted date
+          input.value = formattedDate;
+      }
+  }
+</script>
 
 </body>
 
