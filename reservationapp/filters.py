@@ -3,5 +3,6 @@ from . models import *
 
 class ReservationFilter(django_filters.FilterSet):
     class Meta:
-        fields='__all__'
+        fields=['Firstname','Lastname']
         models=Reservation
+        

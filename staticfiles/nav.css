@@ -28,6 +28,7 @@
 
 a {
     text-decoration: none;
+    
 }
 
 body {
@@ -114,6 +115,7 @@ body {
 
 .nav-toggle:active {
     scale: 0.9;
+    
 }
 
 .toggle--icon {
@@ -180,6 +182,9 @@ body {
 }
 .nav__list:hover .nav__link:not(:focus, :hover) {
     color: var(--text-accent);
+}
+.active{
+color:white
 }
 
 @media (max-width: 575px) {

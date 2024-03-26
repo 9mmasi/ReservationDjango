@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%load static%}
+{% load static %}
 <html>
 
 <head>
@@ -8,84 +8,64 @@
   <link rel="stylesheet" href="{% static 'show.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-{%include "navbar.html" %}
-{% if user.is_authenticated %}
-   
-<form method="GET" action="{% url 'viewlist' %}">
-  <label for="Date_checkIn">Date_checkIn</label>
-  <input type="date" id="Date_checkIn" onchange="formatDate(this) name="Date_checkIn">
 
-  <label for="Date_checkOut">Date_checkOut:</label>
-  <input type="date" id="Date_checkOut" onchange="formatDate(this) name="Date_checkOut
-  ">
+<body>
+  {% include "navbar.html" %}
+  {% if user.is_authenticated %}
+  <form method="GET" action="{% url 'viewlist' %}">
+    <label for="Date_checkIn">Date_checkIn:</label>
+    <input type="date" id="Date_checkIn"  name="Date_checkIn">
 
-  <button type="submit">Filter</button>
-</form>
-<table class="table">
-  <thead>
-    <th>Firstname</th>
-    <th>Lastname</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Zipcode</th>
-    <th>State</th>
-    <th>Detail</th>
-  </thead>
-  <tbody>
-    {%for reservation in reservations %}
-    <tr>
-      <td data-label="S.No">{{ reservation.Firstname }}</td>
-      <td data-label="Name">{{ reservation.Lastname }}</td>
-      <td data-label="Age">{{ reservation.Email }}</td>
-      <td data-label="Marks%">{{ reservation.Phone }}</td>
-      <td data-label="Staus">{{ reservation.Zip_code }}</td>
-      <td data-label="Staus">{{ reservation.State }}</td>
-      <td data-label="Staus"><a href="{% url 'reservation_detail' reservation.id %}"><i class="fa-solid fa-eye"></i> view</a></td>
-    </tr>
-{% endfor %}
-   
-  </tbody>
-</table>
-<div class="pagination justify-content-center">
-  <span class="step-links">
+    <label for="Date_checkOut">Date_checkOut:</label>
+    <input type="date"  id="Date_checkOut" name="Date_checkOut">
+
+    <button type="submit">Filter</button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>Date_checkIn</th>
+      <th>Date_checkOut</th>
+      <th>Detail</th>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td data-label="S.No">{{ reservation.Firstname }}</td>
+        <td data-label="Name">{{ reservation.Lastname }}</td>
+        <td data-label="Age">{{ reservation.Email }}</td>
+        <td data-label="Marks%">{{ reservation.Date_checkIn }}</td>
+        <td data-label="Staus">{{ reservation.Date_checkOut }}</td>
+        <td data-label="Staus"><a href="{% url 'reservation_detail' reservation.id %}"><i class="fa-solid fa-eye"></i> view</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="pagination justify-content-center">
+    <span class="step-links">
       {% if reservations.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ reservations.previous_page_number }}">previous</a>
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ reservations.previous_page_number }}">previous</a>
       {% endif %}
 
       <span class="current">
-          Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}.
+        Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}.
       </span>
 
       {% if reservations.has_next %}
-          <a href="?page={{ reservations.next_page_number }}">next</a>
-          <a href="?page={{ reservations.paginator.num_pages }}">last &raquo;</a>
+      <a href="?page={{ reservations.next_page_number }}">next</a>
+      <a href="?page={{ reservations.paginator.num_pages }}">last &raquo;</a>
       {% endif %}
-  </span>
-</div>
-{% else %}
-<p>You must be logged in to access the reservation list.</p>
-{% endif %}
-<script>
-  function formatDate(input) {
-      if (input.value) {
-          // Convert the input value to a Date object
-          var date = new Date(input.value);
-          
-          // Extract date components
-          var month = date.getMonth() + 1; // Month is zero-based
-          var day = date.getDate();
-          var year = date.getFullYear();
-          
-          // Format the date as MM-DD-YYYY
-          var formattedDate = month + '-' + day + '-' + year;
-          
-          // Set the input value to the formatted date
-          input.value = formattedDate;
-      }
-  }
-</script>
-
+    </span>
+  </div>
+  {% else %}
+  <p>You must be logged in to access the reservation list.</p>
+  {% endif %}
+  
 </body>
 
 </html>
+

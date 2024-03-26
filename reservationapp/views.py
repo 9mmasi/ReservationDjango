@@ -83,14 +83,14 @@ def reservation_list(request):
         # Filter reservations based on Date_checkIn and Date_checkOut range
         Date_checkIn = request.GET.get('Date_checkIn', '')
         Date_checkOut = request.GET.get('Date_checkOut', '')
-        
+
         # Validate date format consistency
         date_format = "%m-%d-%Y"
         try:
             if Date_checkIn:
-                datetime.strptime(Date_checkIn, date_format)
+                Date_checkIn = datetime.strptime(Date_checkIn, "%Y-%m-%d").strftime(date_format)
             if Date_checkOut:
-                datetime.strptime(Date_checkOut, date_format)
+                Date_checkOut = datetime.strptime(Date_checkOut, "%Y-%m-%d").strftime(date_format)
         except ValueError:
             # Handle invalid date format
             # You can redirect the user to an error page or display a message
@@ -102,9 +102,9 @@ def reservation_list(request):
             Date_checkOut = datetime.strptime(Date_checkOut, date_format)
             reservations = reservations.filter(Date_checkIn__range=[Date_checkIn, Date_checkOut])
 
-        reservations = reservations.order_by('-Date_checkIn')    
+        reservations = reservations.order_by('-Date_checkIn')
 
-        paginator = Paginator(reservations, 10)
+        paginator = Paginator(reservations, 8)
         page = request.GET.get('page')
 
         try:
@@ -122,8 +122,6 @@ def reservation_list(request):
         return render(request, 'showList.html', context)
     else:
         return redirect("login")
-
-
 
 
 def reservation_detail(request, pk):

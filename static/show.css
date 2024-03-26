@@ -67,15 +67,19 @@ body {
 /* Basic styling for the form */
 form {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content:center;
   max-width: 400px; /* Adjust the maximum width as needed */
   margin: 0 auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  align-items: center;
 }
 
 /* Style for labels */
 label {
   margin-bottom: 5px;
+  margin-left: 1rem;
 }
 
 /* Style for date inputs */
@@ -88,18 +92,29 @@ input[type="date"] {
 
 /* Style for the filter button */
 button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 15px;
+  background: -webkit-gradient(linear, left top, right top, from(#6a64f1), to(#92c9e6));
+  background: linear-gradient(to right, #6a64f1, #92c9e6);
+  color: black;
+  padding: 11px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 1rem;
+  margin-bottom:.7rem ;
 }
 
 /* Responsive layout adjustments */
 @media (max-width: 600px) {
   form {
     max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  button{
+    margin-right: .7rem;
+    padding-top: 1rem;
+    margin-top: .5rem;
   }
 }
 

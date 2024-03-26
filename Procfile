@@ -1,1 +1,0 @@
-web: gunicorn Reservation.wsgi --log-level=info
